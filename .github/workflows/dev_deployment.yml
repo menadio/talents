@@ -1,0 +1,27 @@
+name: 'Dev Deployment'
+
+on:
+  push:
+    branches: [ development ]
+
+jobs:
+  laravel-tests:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+      with:
+        php-version: '8.0'
+    - uses: actions/checkout@v3
+    - name: Setup laravel project
+    - run: composer install
+    - run: php -r "file_exists('.env') || copy('.env.production', '.env');"
+    - run: php artisan config:cache
+    - run: php artisan route:cache
+      
+env:
+  APP_KEY: ${{ secrets.DEV_APP_KEY }}
+  DB_DATABASE: ${{ secrets.DEV_DB }}
+  DB_USERNAME: ${{ secrets.DEV_DB_USERNAME }}
+  DB_PASSWORD: ${{ secrets.DEV_DB_PASSWORD }}
