@@ -14,7 +14,7 @@ jobs:
       with:
         php-version: '8.0'
     - uses: actions/checkout@v3
-    - name: "Setup CI Authentication"
+    - name: "Setup CD Authentication"
       run: |
           composer config http-basic.nova.laravel.com ${{ secrets.NOVA_USERNAME }} ${{ secrets.NOVA_PASSWORD }}
     - run: composer install --ignore-platform-reqs
