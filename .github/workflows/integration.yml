@@ -14,7 +14,10 @@ jobs:
       with:
         php-version: '8.0'
     - uses: actions/checkout@v3
-    # - run: composer install
+    - name: "Setup CI Authentication"
+      run: |
+          composer config http-basic.nova.laravel.com ${{ secrets.NOVA_USERNAME }} ${{ secrets.NOVA_PASSWORD }}
+    - run: composer install
     - run: cp .env.example .env
-    # - run: php artisan key:generate
-    # - run: php artisan test
+    - run: php artisan key:generate
+    - run: php artisan test
