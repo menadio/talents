@@ -14,6 +14,9 @@ jobs:
       with:
         php-version: '8.0'
     - uses: actions/checkout@v3
+    - name: "Setup CI Authentication"
+      run: |
+          composer config http-basic.nova.laravel.com ${{ secrets.NOVA_USERNAME }} ${{ secrets.NOVA_PASSWORD }}
     - run: composer install
     - run: php -r "file_exists('.env') || copy('.env.production', '.env');"
     - run: php artisan config:cache
