@@ -17,7 +17,7 @@ jobs:
     - name: "Setup CI Authentication"
       run: |
           composer config http-basic.nova.laravel.com ${{ secrets.NOVA_USERNAME }} ${{ secrets.NOVA_PASSWORD }}
-    - run: composer install
+    - run: composer install --ignore-platform-reqs
     - run: php -r "file_exists('.env') || copy('.env.production', '.env');"
     - run: php artisan config:cache
     - run: php artisan route:cache
