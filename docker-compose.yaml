@@ -16,13 +16,9 @@ services:
     image: mysql:8.0
     environment:
       MYSQL_DATABASE: bst_api
-      MYSQL_USERNAME: bookstars
-      MYSQL_PASSWORD: secret012
-      MYSQL_ROOT: admin
-      MYSQL_ROOT_PASSWORD: secret012
-    ports:
-      - 3306:3306
-
+      MYSQL_USER: bookstars
+      MYSQL_PASSWORD: secretbst
+      MYSQL_ROOT_PASSWORD: secretbst
   adminer:
     image: adminer
     ports:
