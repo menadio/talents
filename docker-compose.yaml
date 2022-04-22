@@ -19,7 +19,12 @@ services:
       MYSQL_USER: bookstars
       MYSQL_PASSWORD: secretbst
       MYSQL_ROOT_PASSWORD: secretbst
+    volumes:
+      - testdb:/var/lib/mysql
   adminer:
     image: adminer
     ports:
       - 8080:8080
+
+volumes:
+  testdb:
