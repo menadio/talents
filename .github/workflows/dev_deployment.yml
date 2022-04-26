@@ -15,15 +15,14 @@ jobs:
         php-version: '8.0'
     - uses: actions/checkout@v3
     - name: "Setup CD Authentication"
+      env:
+          APP_KEY: ${{ secrets.DEV_APP_KEY }}
+          DB_DATABASE: ${{ secrets.DEV_DB }}
+          DB_USERNAME: ${{ secrets.DEV_DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DEV_DB_PASSWORD }}
       run: |
           composer config http-basic.nova.laravel.com ${{ secrets.NOVA_USERNAME }} ${{ secrets.NOVA_PASSWORD }}
     - run: composer install --ignore-platform-reqs
     - run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - run: php artisan config:cache
     - run: php artisan route:cache
-      
-env:
-  APP_KEY: ${{ secrets.DEV_APP_KEY }}
-  DB_DATABASE: ${{ secrets.DEV_DB }}
-  DB_USERNAME: ${{ secrets.DEV_DB_USERNAME }}
-  DB_PASSWORD: ${{ secrets.DEV_DB_PASSWORD }}
