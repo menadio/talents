@@ -41,4 +41,5 @@ jobs:
 
     - run: php artisan config:cache
     - run: php artisan route:cache
+    - run: php artisan migrate --seed
       
