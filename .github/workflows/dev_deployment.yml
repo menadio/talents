@@ -29,7 +29,9 @@ jobs:
         DB_USERNAME: ${{ secrets.DB_USERNAME }}
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       run: |
-          php -r "file_exists('.env') || copy('.env.example', '.env');"
+          touch .env
+          echo APP_KEY=${{ secrets.APP_KEY }} >> .env
+
 
     - run: php artisan config:cache
     - run: php artisan route:cache
