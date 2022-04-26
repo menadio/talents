@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Symfony\Component\HttpFoundation\Response;
 
 class Controller extends BaseController
 {
@@ -19,7 +20,7 @@ class Controller extends BaseController
      * @param $httpStatus
      * @return \Illuminate\Http\Response
      */
-    public function successRes($data = null, $message = 'Operation successful.', $httpStatus = 200)
+    public function successRes($data = null, $message = 'Operation successful.', $httpStatus = Response::HTTP_OK)
     {
         if (is_null($data)) {
             return response()->json([
@@ -42,7 +43,7 @@ class Controller extends BaseController
      * @param $message
      * @return \Illuminate\Http\Response
      */
-    public function errorRes($error = null, $message = null, $httpStatus = 400)
+    public function errorRes($error = null, $message = null, $httpStatus = Response::HTTP_BAD_REQUEST)
     {
         if (is_null($error)) {
             return response()->json([
@@ -69,6 +70,6 @@ class Controller extends BaseController
         return response()->json([
             'success'   => false,
             'message'   => 'Oops! That shouldn\'t happen, please try again later.'
-        ], 500);
+        ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Events\NewIndividualRegistered;
 use Illuminate\Support\Facades\Validator;
 
 class RegistrationController extends Controller
@@ -31,6 +32,10 @@ class RegistrationController extends Controller
             'password'  => Hash::make($request->password),
             'account_type_id'   => $request->account_type_id
         ]);
+
+        if ( $user->accountType->type === 'Individual') {
+            NewIndividualRegistered::dispatch($user);
+        }
 
         return $this->successRes(null, 'Registration was successful.', 201);
     }
