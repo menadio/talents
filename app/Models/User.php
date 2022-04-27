@@ -45,13 +45,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * The relationships that should always be loaded.
-     *
-     * @var array
-     */
-    // protected $with = ['profile'];
-
     protected function username(): Attribute
     {
         return Attribute::make(
@@ -67,5 +60,11 @@ class User extends Authenticatable
     public function profile()
     {
         return $this->hasOne(Profile::class);
+    }
+
+    public function experiences()
+    {
+        return $this->hasMany(Experience::class)
+            ->orderBy('start_date', 'desc');
     }
 }
