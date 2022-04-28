@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AccountTypeSeeder::class,
             EmploymentTypeSeeder::class,
-            IndustrySeeder::class
+            IndustrySeeder::class,
+            UserSeeder::class,
         ]);
     }
 }
