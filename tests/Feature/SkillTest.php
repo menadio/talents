@@ -83,6 +83,6 @@ class SkillTest extends TestCase
         
         $response = $this->delete(route('delete.skill', Skill::factory()->create()));
 
-        $response->assertNoContent();
+        $response->assertOk();
     }
 }

@@ -81,7 +81,7 @@ class UserSkillController extends Controller
             return $this->successRes(
                 null, 
                 'Removed skill successfully', 
-                Response::HTTP_NO_CONTENT
+                Response::HTTP_OK
             );
         } catch (\Exception $e) {
             Log::error($e->getMessage());
