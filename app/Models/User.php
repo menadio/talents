@@ -67,4 +67,9 @@ class User extends Authenticatable
         return $this->hasMany(Experience::class)
             ->orderBy('start_date', 'desc');
     }
+
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class, 'skill_user');
+    }
 }

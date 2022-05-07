@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             AccountTypeSeeder::class,
             EmploymentTypeSeeder::class,
             IndustrySeeder::class,
+            SkillSeeder::class,
             UserSeeder::class,
         ]);
     }
