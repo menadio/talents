@@ -42,6 +42,7 @@ class UserController extends Controller
     {
         // validate request data
         $validation = Validator::make($request->all(), [
+            'username'      => ['string'],
             'first_name'    => ['string'],
             'last_name'     => ['string'],
             'about'         => ['string'],
@@ -50,7 +51,11 @@ class UserController extends Controller
             'state'         => ['string'],
             'city'          => ['string'],
             'address'       => ['string'],
-            'postal_code'   => ['string']
+            'postal_code'   => ['string'],
+            'facebook'      => ['string'],
+            'instagram'     => ['string'],
+            'twitter'       => ['string'],
+            'tiktok'        => ['string']
         ]);
 
         if ($validation->fails()) {
