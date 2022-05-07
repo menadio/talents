@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\AccountTypeResource;
 use App\Models\AccountType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Http\Resources\AccountTypeResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class AccountTypeController extends Controller
 {
@@ -15,10 +17,18 @@ class AccountTypeController extends Controller
      */
     public function index()
     {
-        $accountTypes = AccountType::all();
+        try {
+            $accountTypes = AccountType::all();
 
-        return response()->json([
-            'types' => AccountTypeResource::collection($accountTypes)
-        ], 200);
+            return $this->successRes(
+                AccountTypeResource::collection($accountTypes),
+                'Retrieved collection successfully',
+                Response::HTTP_OK
+            );
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+
+            return $this->serverErrorRes();
+        }
     }
 }
