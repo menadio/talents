@@ -39,6 +39,7 @@ jobs:
           echo DB_USERNAME=${{ secrets.DB_USERNAME }} >> .env
           echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
           echo QUEUE_CONNECTION=${{ secrets.QUEUE_CONNECTION }} >> .env
+          echo SANCTUM_STATEFUL_DOMAINS=${{ secrets.SANCTUM_STATEFUL_DOMAINS }} >> .env
 
     - run: php artisan config:cache
     - run: php artisan route:cache
