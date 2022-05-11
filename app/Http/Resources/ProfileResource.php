@@ -28,7 +28,9 @@ class ProfileResource extends JsonResource
             'facebook'      => $this->facebook,
             'instagram'     => $this->instagram,
             'twitter'       => $this->twitter,
-            'tiktok'        => $this->tiktok
+            'tiktok'        => $this->tiktok,
+            'photo'         => $this->user->getFirstMediaUrl('user-photos'),
+            'cover_photo'   => $this->user->getFirstMediaUrl('cover-photos'),
         ];
     }
 }

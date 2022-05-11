@@ -55,7 +55,9 @@ class UserController extends Controller
             'facebook'      => ['string'],
             'instagram'     => ['string'],
             'twitter'       => ['string'],
-            'tiktok'        => ['string']
+            'tiktok'        => ['string'],
+            'photo'         => ['image', 'mimes:jpg,bmp,png', 'max:256'],
+            'cover_photo'   => ['image', 'mimes:jpg,bmp,png', 'max:256']
         ]);
 
         if ($validation->fails()) {
@@ -69,7 +71,7 @@ class UserController extends Controller
         try {
             $user = auth()->user();
 
-            $user->profile->update($request->all());
+            $user->profile->update($request->except(['photo', 'cover_photo']));
 
             if ( $user->update() === false ) {
                 return $this->errorRes(
@@ -77,6 +79,16 @@ class UserController extends Controller
                     'Failed to update profile', 
                     Response::HTTP_BAD_REQUEST
                 );
+            }
+
+            if ($request->has('photo')) {
+                $user->addMedia($request->photo)
+                    ->toMediaCollection('user-photos');
+            }
+
+            if ($request->has('cover_photo')) {
+                $user->addMedia($request->cover_photo)
+                    ->toMediaCollection('cover-photos');
             }
 
             return $this->successRes(
