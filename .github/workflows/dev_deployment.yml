@@ -40,6 +40,7 @@ jobs:
           echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
           echo QUEUE_CONNECTION=${{ secrets.QUEUE_CONNECTION }} >> .env
           echo SANCTUM_STATEFUL_DOMAINS=${{ secrets.SANCTUM_STATEFUL_DOMAINS }} >> .env
+          echo MEDIA_DISK=${{ secrets.MEDIA_DISK }} >> .env
 
     - run: php artisan config:cache
     - run: php artisan route:cache
