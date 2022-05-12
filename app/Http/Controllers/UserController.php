@@ -42,7 +42,7 @@ class UserController extends Controller
     {
         // validate request data
         $validation = Validator::make($request->all(), [
-            'username'      => ['string'],
+            'username'      => ['string', 'unique:username'],
             'first_name'    => ['string'],
             'last_name'     => ['string'],
             'about'         => ['string'],
