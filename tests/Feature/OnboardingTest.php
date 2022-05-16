@@ -19,7 +19,7 @@ class OnboardingTest extends TestCase
     {        
         $accountType = AccountType::create(['type' => 'individual']);
 
-        $response = $this->json('POST', '/api/register', [
+        $response = $this->post(route('register'), [
             'account_type_id'   => $accountType->id,
             'email'             => 'hello@bookstars.co',
             'password'          => 'password'
@@ -39,7 +39,7 @@ class OnboardingTest extends TestCase
     {
         $accountType = AccountType::create(['type' => 'business']);
 
-        $response = $this->json('POST', '/api/register', [
+        $response = $this->post(route('register'), [
             'account_type_id'   => $accountType->id,
             'email'             => 'hello@bookstars.co',
             'password'          => 'password'

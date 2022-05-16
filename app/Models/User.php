@@ -10,6 +10,10 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements HasMedia
@@ -48,31 +52,30 @@ class User extends Authenticatable implements HasMedia
         'email_verified_at' => 'datetime',
     ];
 
-    public function username(): Attribute
-    {
-        return Attribute::make(
-            set: fn ($value) => strtolower($value),
-        );
-    }
-
-    public function accountType()
+    public function accountType(): BelongsTo
     {
         return $this->belongsTo(AccountType::class);
     }
 
-    public function profile()
+    public function profile(): HasOne
     {
         return $this->hasOne(Profile::class);
     }
 
-    public function experiences()
+    public function experiences(): HasMany
     {
         return $this->hasMany(Experience::class)
             ->orderBy('start_date', 'desc');
     }
 
-    public function skills()
+    public function skills(): BelongsToMany
     {
         return $this->belongsToMany(Skill::class, 'skill_user');
+    }
+
+    public function portfolios(): HasMany
+    {
+        return $this->hasMany(Portfolio::class)
+            ->orderBy('id', 'desc');
     }
 }

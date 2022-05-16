@@ -16,6 +16,7 @@ class ProfileResource extends JsonResource
     {
         return [
             'username'      => $this->username,
+            'fullname'      => ucwords($this->first_name . ' ' . $this->last_name),
             'first_name'    => $this->first_name,
             'last_name'     => $this->last_name,
             'phone'         => $this->phone,
