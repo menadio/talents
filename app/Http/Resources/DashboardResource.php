@@ -14,11 +14,10 @@ class DashboardResource extends JsonResource
      */
     public function toArray($request)
     {
-        // return parent::toArray($request);
         return [
-            'fullname'  => $this->profile->first_name . ' ' . $this->profile->last_name,
-            'address'   => $this->profile->address,
-            'overview'  => $this->profile->about,
+            'fullname'      => $this->profile->first_name . ' ' . $this->profile->last_name,
+            'address'       => $this->profile->address,
+            'overview'      => $this->profile->about,
             'experiences'   => ExperienceResource::collection($this->whenLoaded('experiences')),
             'skills'        => SkillResource::collection($this->whenLoaded('skills')),
             'portfolios'    => PortfolioResource::collection($this->whenLoaded('portfolios'))
