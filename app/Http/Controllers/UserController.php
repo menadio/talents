@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use App\Http\Resources\UserResource;
-use App\Models\Profile;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -42,7 +42,7 @@ class UserController extends Controller
     {
         // validate request data
         $validation = Validator::make($request->all(), [
-            'username'      => ['string'],
+            'username'      => ['string', 'unique:username'],
             'first_name'    => ['string'],
             'last_name'     => ['string'],
             'about'         => ['string'],

@@ -22,7 +22,7 @@ class AuthenticationTest extends TestCase
         $accountType = AccountType::create(['type' => 'individual']);
 
         // register new user
-        $response = $this->json('POST', '/api/register', [
+        $response = $this->post(route('register'), [
             'email' => 'hello@bookstars.co',
             'password' => 'password',
             'account_type_id' => $accountType->id
@@ -31,7 +31,7 @@ class AuthenticationTest extends TestCase
         $response->assertCreated();
 
         // user sign in attempt
-        $response = $this->json('POST', '/api/login', [
+        $response = $this->post(route('login'), [
             'email' => 'hello@bookstars.co',
             'password' => 'password'
         ]);
@@ -55,7 +55,7 @@ class AuthenticationTest extends TestCase
             ]),
         );
 
-        $response = $this->get('/api/logout');
+        $response = $this->get(route('logout'));
         $response->assertOk();
     }
 }

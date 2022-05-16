@@ -7,9 +7,11 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\IndustryController;
+use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\UserSkillController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\AccountTypeController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\EmploymentTypeController;
 
@@ -21,13 +23,15 @@ Route::get('industries', [IndustryController::class, 'index']); // get collectio
 
 Route::get('skills', [SkillController::class, 'index'])->name('skills.index'); // get collection of skills
 
-Route::post('register', [RegistrationController::class, 'register']); // individual registration
+Route::post('register', [RegistrationController::class, 'register'])->name('register'); // individual registration
 
-Route::post('login', [LoginController::class, 'login']); // login
+Route::post('login', [LoginController::class, 'login'])->name('login'); // login
 
 Route::middleware('auth:sanctum')->group(function ($router) {
 
-    Route::get('logout', [LogoutController::class, 'logout']); // logout authenticated user
+    Route::get('logout', [LogoutController::class, 'logout'])->name('logout'); // logout authenticated user
+
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard'); // get user dashboard data
 
     Route::get('user/profile', [UserController::class, 'profile']); // retrieve user profile
 
@@ -46,5 +50,9 @@ Route::middleware('auth:sanctum')->group(function ($router) {
     Route::post('user/skills', [UserSkillController::class, 'addSkills'])->name('skills.store'); // store a skill
 
     Route::delete('user/skills/{skill}', [UserSkillController::class, 'deleteSkill'])->name('delete.skill'); // delete a skill
+
+    Route::get('user/portfolios', [PortfolioController::class, 'index'])->name('portfolios.list'); // retrieve user portfolio list
+
+    Route::post('user/portfolios', [PortfolioController::class, 'store'])->name('portfolios.store'); // add a portfolio
 
 });
