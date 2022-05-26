@@ -6,12 +6,13 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\IndustryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\UserSkillController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\AccountTypeController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\EmploymentTypeController;
 
@@ -22,6 +23,8 @@ Route::get('employment-types', [EmploymentTypeController::class, 'index']); // g
 Route::get('industries', [IndustryController::class, 'index']); // get collection of industries
 
 Route::get('skills', [SkillController::class, 'index'])->name('skills.index'); // get collection of skills
+
+Route::get('categories', [CategoryController::class, 'index'])->name('categories.index'); // get collection of categories
 
 Route::post('register', [RegistrationController::class, 'register'])->name('register'); // individual registration
 
