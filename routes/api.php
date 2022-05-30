@@ -8,6 +8,7 @@ use App\Http\Controllers\SkillController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\IndustryController;
+use App\Http\Controllers\PositionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\UserSkillController;
@@ -57,5 +58,11 @@ Route::middleware('auth:sanctum')->group(function ($router) {
     Route::get('user/portfolios', [PortfolioController::class, 'index'])->name('portfolios.list'); // retrieve user portfolio list
 
     Route::post('user/portfolios', [PortfolioController::class, 'store'])->name('portfolios.store'); // add a portfolio
+
+    Route::get('positions', [PositionController::class, 'index'])->name('positions.index'); // list job positions
+
+    Route::post('positions', [PositionController::class, 'store'])->name('positions.store'); // store new position
+
+    Route::get('positions/{position}', [PositionController::class, 'show'])->name('positions.show'); // show specific position
 
 });
