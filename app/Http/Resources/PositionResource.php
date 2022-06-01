@@ -24,6 +24,7 @@ class PositionResource extends JsonResource
             'status' => $this->status->name,
             'category' => $this->category->name,
             'employmentType' => $this->employmentType->name,
+            'applicants' => $this->jobApplications->count(),
             'createdAt' => $this->created_at
         ];
     }

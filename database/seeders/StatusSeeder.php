@@ -22,6 +22,7 @@ class StatusSeeder extends Seeder
             ['name' => 'accepted', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'active', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'deactivated', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'pending review', 'created_at' => now(), 'updated_at' => now()],
         ];
 
         foreach ($statuses as $status) {

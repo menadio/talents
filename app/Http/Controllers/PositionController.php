@@ -51,9 +51,9 @@ class PositionController extends Controller
     {
         $validation = Validator::make($request->all(), [
             'title' => ['required', 'string'],
-            'category' => ['required', 'numeric'],
+            'category_id' => ['required', 'numeric'],
             'salary' => ['required', 'numeric', 'min:1'],
-            'employment_type' => ['required', 'numeric'],
+            'employment_type_id' => ['required', 'numeric'],
             'location' => ['required', 'string'],
             'description' => ['required', 'string']
         ]);
@@ -67,7 +67,7 @@ class PositionController extends Controller
         }
 
         try {
-            $newPosition = $this->positionService->newPosition($request);
+            $newPosition = $this->positionService->createPosition($request);
             
             return $this->successRes(
                 new PositionResource($newPosition->load('category', 'employmentType')),
@@ -111,7 +111,45 @@ class PositionController extends Controller
      */
     public function update(Request $request, Position $position)
     {
-        //
+        $validation = Validator::make($request->all(), [
+            'title' => ['string'],
+            'category_id' => ['numeric'],
+            'salary' => ['numeric', 'min:1'],
+            'employment_type_id' => ['numeric'],
+            'location' => ['string'],
+            'description' => ['string']
+        ]);
+
+        if ($validation->fails()) {
+            return $this->errorRes(
+                $validation->errors()->first(),
+                'Failed validation',
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+        }
+
+        try {
+            $positionUpdated = $this->positionService
+                ->updatePosition($position, auth()->user(), $request);
+
+            if ($positionUpdated) {
+                return $this->successRes(
+                    new PositionResource($position),
+                    'Job position was updated successfully',
+                    Response::HTTP_OK
+                );
+            } else {
+                return $this->errorRes(
+                    null,
+                    'Failed to update job position',
+                    Response::HTTP_BAD_REQUEST
+                );
+            }
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+
+            return $this->serverErrorRes();
+        }
     }
 
     /**
@@ -122,6 +160,25 @@ class PositionController extends Controller
      */
     public function destroy(Position $position)
     {
-        //
+        try {
+            $deletedposition = $this->positionService->deletePosition($position, auth()->user());
+
+            if ($deletedposition) {
+                return $this->successRes(
+                    null, 
+                    'Job post was deleted successfully.',
+                    Response::HTTP_NO_CONTENT
+                );
+            } else {
+                return $this->errorRes(
+                    null, 
+                    'Unable to delete position.', 
+                    Response::HTTP_BAD_REQUEST);
+            }
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+
+            return $this->serverErrorRes();
+        }
     }
 }

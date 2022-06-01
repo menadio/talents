@@ -16,6 +16,7 @@ use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\AccountTypeController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\EmploymentTypeController;
+use App\Http\Controllers\JobApplicationController;
 
 Route::get('account-types', [AccountTypeController::class, 'index']); // get collectionn of account types
 
@@ -64,5 +65,11 @@ Route::middleware('auth:sanctum')->group(function ($router) {
     Route::post('positions', [PositionController::class, 'store'])->name('positions.store'); // store new position
 
     Route::get('positions/{position}', [PositionController::class, 'show'])->name('positions.show'); // show specific position
+
+    Route::put('positions/{position}', [PositionController::class, 'update'])->name('positions.update'); // update a specific position
+
+    Route::delete('positions/{position}', [PositionController::class, 'destroy'])->name('positions.delete'); // delete specific position
+
+    Route::post('positions/{position}/apply', [JobApplicationController::class, 'apply'])->name('positions.apply'); // apply for a job position
 
 });

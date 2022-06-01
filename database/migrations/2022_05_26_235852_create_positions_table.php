@@ -30,7 +30,6 @@ return new class extends Migration
                 ->cascadeOnUpdate();
             $table->foreignId('approved_by')->nullable()
                 ->constrained('users');
-            $table->softDeletes();
             $table->timestamps();
         });
     }

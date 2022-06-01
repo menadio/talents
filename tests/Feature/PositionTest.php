@@ -31,9 +31,9 @@ class PositionTest extends TestCase
 
         $response = $this->post(route('positions.store'), [
             'title' => $this->faker->word(),
-            'category' => $category->id,
+            'category_id' => $category->id,
             'salary'    => $this->faker->randomFloat(2, 10000, 1000000),
-            'employment_type' => $employmentType->id,
+            'employment_type_id' => $employmentType->id,
             'location' => $this->faker->state(),
             'description' => $this->faker->realTextBetween($minNbChars = 160, $maxNbChars = 250, $indexSize = 2),
         ]);
@@ -80,5 +80,42 @@ class PositionTest extends TestCase
         $response = $this->get(route('positions.show', $position));
 
         $response->assertOk();
+    }
+
+    /**
+     * @test
+     */
+    public function can_delete_position()
+    {
+        Sanctum::actingAs(
+            User::factory()->create(),
+        );
+
+        $position = Position::factory()
+            ->for(auth()->user())
+            ->create();
+
+        $response = $this->delete(route('positions.delete', $position));
+
+        $response->assertNoContent();
+        $this->assertModelMissing($position);
+    }
+
+    /**
+     * @test
+     */
+    public function can_update_position()
+    {
+        Sanctum::actingAs(
+            User::factory()->create(),
+        );
+
+        $position = Position::factory()
+            ->for(auth()->user())
+            ->create();
+
+        $response = $this->put(route('positions.update', $position), []);
+
+        $response->assertSuccessful();
     }
 }
