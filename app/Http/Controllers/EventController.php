@@ -58,16 +58,9 @@ class EventController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Eventservice $eventService)
-    
+    {
         $validation = Validator::make($request->all(), [
-            'title' => ['required', 'string'],
-            'event_category_id' => ['required', 'numeric', 'exists:event_categories,id'],
-            'location' => ['required', 'string'],
-            'date' => ['required', 'date'],
-            'time' => ['required'],
-            'description' => ['required', 'string'],
-            'event_type_id' => ['required', 'numeric'],
-            'price' => ['numeric', 'min:0']
+            
         ]);
 
         if ($validation->fails()) {
