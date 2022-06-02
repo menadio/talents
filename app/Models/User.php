@@ -78,4 +78,14 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany(Portfolio::class)
             ->orderBy('id', 'desc');
     }
+
+    public function positions(): HasMany
+    {
+        return $this->hasMany(Position::class);
+    }
+
+    public function jobApplications(): HasMany
+    {
+        return $this->hasMany(JobApplication::class);
+    }
 }

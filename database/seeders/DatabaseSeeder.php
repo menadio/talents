@@ -20,6 +20,10 @@ class DatabaseSeeder extends Seeder
             IndustrySeeder::class,
             SkillSeeder::class,
             UserSeeder::class,
+            CategorySeeder::class,
+            StatusSeeder::class,
+            EventCategorySeeder::class,
+            EventTypeSeeder::class
         ]);
     }
 }
