@@ -7,22 +7,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Status extends Model
+class EventType extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $guarded  = ['id'];
 
     public function name(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => ucwords($value)
+            get: fn ($value) => ucfirst($value)
         );
-    }
-
-    public function jobApplications(): HasMany
-    {
-        return $this->hasMany(JobApplication::class);
     }
 
     public function events(): HasMany

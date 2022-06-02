@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Models\JobApplication;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\LogoutController;
@@ -17,7 +19,6 @@ use App\Http\Controllers\AccountTypeController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\EmploymentTypeController;
 use App\Http\Controllers\JobApplicationController;
-use App\Models\JobApplication;
 
 Route::get('account-types', [AccountTypeController::class, 'index']); // get collectionn of account types
 
@@ -30,6 +31,8 @@ Route::get('skills', [SkillController::class, 'index'])->name('skills.index'); /
 Route::get('categories', [CategoryController::class, 'index'])->name('categories.index'); // get collection of categories
 
 Route::get('positions/list', [PositionController::class, 'list'])->name('positions.fetch'); // list job positions collection
+
+Route::get('events/list', [EventController::class, 'index'])->name('events.name'); // list all events
 
 Route::post('register', [RegistrationController::class, 'register'])->name('register'); // individual registration
 
@@ -84,5 +87,7 @@ Route::middleware('auth:sanctum')->group(function ($router) {
     Route::get('positions/{position}/selected/job-applications', [JobApplicationController::class, 'selected']);
 
     Route::get('positions/{position}/rejected/job-applications', [JobApplicationController::class, 'rejected']);
+
+    Route::post('events', [EventController::class, 'store'])->name('events.store'); // store a new event
 
 });

@@ -21,7 +21,9 @@ class DatabaseSeeder extends Seeder
             SkillSeeder::class,
             UserSeeder::class,
             CategorySeeder::class,
-            StatusSeeder::class
+            StatusSeeder::class,
+            EventCategorySeeder::class,
+            EventTypeSeeder::class
         ]);
     }
 }
