@@ -18,6 +18,22 @@ class PositionController extends Controller
     {
         $this->positionService = $positionService;
     }
+
+    /**
+     * Retrieve collection of open  job positions
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function list()
+    {
+        $positions = Position::all();
+
+        return $this->successRes(
+            PositionResource::collection($positions),
+            'Retrieved collection of all job positions',
+            Response::HTTP_OK
+        );
+    }
     
     /**
      * Display a listing of the resource.

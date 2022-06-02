@@ -29,4 +29,98 @@ class JobApplicationService
 
         return true;
     }
+
+    /**
+     * Retrieve list of job position applicants
+     * 
+     * @param Position $position
+     * @return User $users
+     */
+    public function getJobApplicants(Position $position)
+    {
+        return $position->jobApplications;
+    }
+
+    /**
+     * Accept job application
+     *      
+     * @param Position $position
+     * @param JobApplication $jobApplication
+     */
+    public function acceptApplication(JobApplication $jobApplication): bool
+    {
+        $user = auth()->user();
+
+        $accepted = Status::where('name', 'accepted')
+            ->pluck('id')->first();
+
+        $pendingReview = Status::where('name', 'pending review')
+            ->pluck('id')->first();
+
+        if ($jobApplication->status_id !== $pendingReview) {
+            return false;
+        }
+
+        $jobApplication->update(['status_id' => $accepted]);
+
+        return true;
+    }
+
+    /**
+     * Reject job application
+     *      
+     * @param Position $position
+     * @param JobApplication $jobApplication
+     */
+    public function rejectApplication(JobApplication $jobApplication): bool
+    {
+        $user = auth()->user();
+
+        $rejected = Status::where('name', 'rejected')
+            ->pluck('id')->first();
+
+        $pendingReview = Status::where('name', 'pending review')
+            ->pluck('id')->first();
+
+        if ($jobApplication->status_id !== $pendingReview) {
+            return false;
+        }
+
+        $jobApplication->update(['status_id' => $rejected]);
+
+        return true;
+    }
+
+    /**
+     * Get selected applicants for a job
+     * 
+     * @param Position $position
+     */
+    public function getSelectedJobApplicants(Position $position)
+    {
+        return JobApplication::where([
+            ['position_id', $position->id]
+        ])->whereHas('status', function ($query) {
+            return $query->where('status_id', 4);
+        })->get();
+    }
+
+    /**
+     * Get selected applicants for a job
+     * 
+     * @param Position $position
+     */
+    public function getRejectedJobApplicants(Position $position)
+    {
+        return JobApplication::where([
+            ['position_id', $position->id]
+        ])->whereHas('status', function ($query) {
+            return $query->where('status_id', 3);
+        })->get();
+
+        // return JobApplication::where([
+        //     ['position_id', $position->id],
+        //     ['status_id', 3]
+        // ])->get();
+    }
 }

@@ -17,6 +17,7 @@ use App\Http\Controllers\AccountTypeController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\EmploymentTypeController;
 use App\Http\Controllers\JobApplicationController;
+use App\Models\JobApplication;
 
 Route::get('account-types', [AccountTypeController::class, 'index']); // get collectionn of account types
 
@@ -27,6 +28,8 @@ Route::get('industries', [IndustryController::class, 'index']); // get collectio
 Route::get('skills', [SkillController::class, 'index'])->name('skills.index'); // get collection of skills
 
 Route::get('categories', [CategoryController::class, 'index'])->name('categories.index'); // get collection of categories
+
+Route::get('positions/list', [PositionController::class, 'list'])->name('positions.fetch'); // list job positions collection
 
 Route::post('register', [RegistrationController::class, 'register'])->name('register'); // individual registration
 
@@ -71,5 +74,15 @@ Route::middleware('auth:sanctum')->group(function ($router) {
     Route::delete('positions/{position}', [PositionController::class, 'destroy'])->name('positions.delete'); // delete specific position
 
     Route::post('positions/{position}/apply', [JobApplicationController::class, 'apply'])->name('positions.apply'); // apply for a job position
+
+    Route::get('positions/{position}/applications', [JobapplicationController::class, 'applicants']); // list specific job applications
+
+    Route::post('job-applications/{jobApplication}/accept', [JobApplicationController::class, 'accept']); // accept a job application
+
+    Route::post('job-applications/{jobApplication}/reject', [JobApplicationController::class, 'reject']); // reject a job application
+
+    Route::get('positions/{position}/selected/job-applications', [JobApplicationController::class, 'selected']);
+
+    Route::get('positions/{position}/rejected/job-applications', [JobApplicationController::class, 'rejected']);
 
 });

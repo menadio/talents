@@ -110,12 +110,37 @@ class PositionTest extends TestCase
             User::factory()->create(),
         );
 
+        $category = Category::factory()->create();
+        $employmentType = EmploymentType::factory()->create();
+
         $position = Position::factory()
             ->for(auth()->user())
             ->create();
 
-        $response = $this->put(route('positions.update', $position), []);
+        $response = $this->put(route('positions.update', $position), [
+            'title' => $this->faker->word(),
+            'category_id' => $category->id,
+            'salary'    => $this->faker->randomFloat(2, 10000, 1000000),
+            'employment_type_id' => $employmentType->id,
+            'location' => $this->faker->state(),
+            'description' => $this->faker->realTextBetween($minNbChars = 160, $maxNbChars = 250, $indexSize = 2),
+        ]);
 
         $response->assertSuccessful();
+    }
+
+    /**
+     * @test
+     */
+    public function can_fetch_all_users_job_positions()
+    {
+        User::factory()
+            ->has(Position::factory()->count(5))
+            ->count(5)->create();
+
+        $response = $this->get(route('positions.fetch'));
+
+        $response->assertStatus(200);
+        $this->assertCount(25, Position::all());
     }
 }
