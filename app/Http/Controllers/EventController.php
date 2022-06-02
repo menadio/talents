@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\EventResource;
 use App\Models\Event;
-use App\Services\Eventservice;
+use App\Services\EventService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -17,7 +17,7 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Eventservice $eventService)
+    public function index(EventService $eventService)
     {
         try {
             $events = $eventService->listEvents();
@@ -34,7 +34,7 @@ class EventController extends Controller
         }
     }
 
-    public function fetch(Eventservice $eventService)
+    public function fetch(EventService $eventService)
     {
         try {
             $events = $eventService->getUserEvents();
@@ -57,7 +57,7 @@ class EventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Eventservice $eventService)
+    public function store(Request $request, EventService $eventService)
     {
         $validation = Validator::make($request->all(), [
             
