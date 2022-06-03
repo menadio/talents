@@ -88,4 +88,9 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->hasMany(JobApplication::class);
     }
+
+    public function events(): HasMany
+    {
+        return $this->hasMany(Event::class);
+    }
 }

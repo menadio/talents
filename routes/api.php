@@ -18,6 +18,7 @@ use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\AccountTypeController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\EmploymentTypeController;
+use App\Http\Controllers\EventCategoryController;
 use App\Http\Controllers\JobApplicationController;
 
 Route::get('account-types', [AccountTypeController::class, 'index']); // get collectionn of account types
@@ -29,6 +30,8 @@ Route::get('industries', [IndustryController::class, 'index']); // get collectio
 Route::get('skills', [SkillController::class, 'index'])->name('skills.index'); // get collection of skills
 
 Route::get('categories', [CategoryController::class, 'index'])->name('categories.index'); // get collection of categories
+
+Route::get('event-categories', EventCategoryController::class)->name('eventCategories'); // get collection of event categories
 
 Route::get('positions/list', [PositionController::class, 'list'])->name('positions.fetch'); // list job positions collection
 
@@ -88,6 +91,13 @@ Route::middleware('auth:sanctum')->group(function ($router) {
 
     Route::get('positions/{position}/rejected/job-applications', [JobApplicationController::class, 'rejected']);
 
+    Route::get('events', [EventController::class, 'fetch'])->name('events.fetch'); // fetch user owned events
+
     Route::post('events', [EventController::class, 'store'])->name('events.store'); // store a new event
 
+    Route::get('events/{event}', [EventController::class, 'show'])->name('events.show'); // view details of an event
+
+    Route::put('events/{event}', [EventController::class, 'update'])->name('events.update'); // update an event
+
+    Route::delete('events/{event}', [EventController::class, 'destroy'])->name('events.delete'); // delete an event
 });
