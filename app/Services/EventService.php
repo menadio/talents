@@ -31,7 +31,11 @@ class Eventservice
     // list all events
     public function listEvents()
     {
-        return Event::orderBy('date', 'desc')
+        $approved = Status::where('name', 'approved')
+            ->pluck('id')->first();
+
+        return Event::where('status_id',  $approved)
+            ->orderBy('date', 'desc')
             ->orderby('time', 'desc')
             ->get();   
     }
@@ -44,38 +48,28 @@ class Eventservice
         return $user->events;
     }
 
-    // view event details
-    public function viewEvent(Event $event)
-    {
+    // get event details
+    public function getEventDetails(Event $event)
+    {        
         return $event;
     }
 
     // update event
     public function updateEvent(Event $event, $request)
     {
-        $user = auth()->user();
-
-        if ($user->id !== $event->user_id) {
-            return false;
-        }
-
         $event->update($request->all());
 
-        return true;
+        return $event;
     }
 
     // delete event
     public function deleteEvent(Event $event)
     {
-        $user = auth()->user();
+        if ( $event->delete() ) {
+            return true;
+        };
 
-        if ($user->id !== $event->user_id) {
-            return false;
-        }
-
-        $event->delete();
-
-        return true;
+        return false;
     }
 
 }

@@ -117,10 +117,5 @@ class JobApplicationService
         ])->whereHas('status', function ($query) {
             return $query->where('status_id', 3);
         })->get();
-
-        // return JobApplication::where([
-        //     ['position_id', $position->id],
-        //     ['status_id', 3]
-        // ])->get();
     }
 }

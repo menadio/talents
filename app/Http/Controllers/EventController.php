@@ -34,6 +34,11 @@ class EventController extends Controller
         }
     }
 
+    /**
+     * Fetch user owned events
+     * 
+     * @return \Illuminate\Http\Response
+     */
     public function fetch(EventService $eventService)
     {
         try {
@@ -59,9 +64,7 @@ class EventController extends Controller
      */
     public function store(Request $request, EventService $eventService)
     {
-        $validation = Validator::make($request->all(), [
-            
-        ]);
+        $validation = Validator::make($request->all(), []);
 
         if ($validation->fails()) {
             return $this->errorRes(
@@ -92,9 +95,29 @@ class EventController extends Controller
      * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function show(Event $event)
+    public function show(Event $event, EventService $eventService)
     {
-        //
+        try {
+            $user = auth()->user();
+
+            if ($user->id !== $event->user_id) {
+                return  $this->errorRes(
+                    null,
+                    'The government forbids you access',
+                    Response::HTTP_UNAUTHORIZED
+                );
+            }
+
+            return $this->successRes(
+                new  EventResource($eventService->getEventDetails($event)),
+                'Retrieved event details successfully',
+                Response::HTTP_OK
+            );
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+
+            return $this->serverErrorRes();
+        }
     }
 
     /**
@@ -104,9 +127,29 @@ class EventController extends Controller
      * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Event $event)
+    public function update(Request $request, Event $event, EventService $eventService)
     {
-        //
+        try {
+            $user = auth()->user();
+
+            if ($user->id !== $event->user_id) {
+                return $this->errorRes(
+                    null,
+                    'The government forbids you access',
+                    Response::HTTP_UNAUTHORIZED
+                );
+            }
+
+            return $this->successRes(
+                new EventResource($eventService->updateEvent($event, $request)),
+                'Event updated',
+                Response::HTTP_OK
+            );
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+
+            return $this->serverErrorRes();
+        }
     }
 
     /**
@@ -115,8 +158,38 @@ class EventController extends Controller
      * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Event $event)
+    public function destroy(Event $event, EventService $eventService)
     {
-        //
+        try {
+            $user = auth()->user();
+    
+            if ($user->id !== $event->user_id) {
+                return $this->errorRes(
+                    null,
+                    'The government forbids you access',
+                    Response::HTTP_UNAUTHORIZED
+                );
+            }
+    
+            $deletedEvent = $eventService->deleteEvent($event);
+    
+            if ($deletedEvent) {
+                return $this->successRes(
+                    null,
+                    'Event deleted',
+                    Response::HTTP_NO_CONTENT
+                );
+            } else {
+                return $this->errorRes(
+                    null,
+                    'Failed to delete event',
+                    Response::HTTP_BAD_REQUEST
+                );
+            }
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+
+            return $this->serverErrorRes();
+        }
     }
 }
