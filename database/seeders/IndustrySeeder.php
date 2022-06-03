@@ -16,11 +16,25 @@ class IndustrySeeder extends Seeder
     public function run()
     {
         $industries = [
-            ['name' => 'finance'],
-            ['name' => 'technology'],
-            ['name' => 'education'],
-            ['name' => 'entertainment'],
-            ['name' => 'hospitality'],
+            ['name' => 'Music Production'],
+            ['name' => 'Movie Production'],
+            ['name' => 'Mixing & Mastering'],
+            ['name' => 'Song Writing'],
+            ['name' => 'Video Shooting'],
+            ['name' => 'Video Editing'],
+            ['name' => 'Animation'],
+            ['name' => 'Modelling'],
+            ['name' => 'Fashion & Beauty'],
+            ['name' => 'Script Writing'],
+            ['name' => 'Screen Writing'],
+            ['name' => 'Photography'],
+            ['name' => 'Cinematography'],
+            ['name' => 'Video Editing'],
+            ['name' => 'Acting'],
+            ['name' => 'Costume Management'],
+            ['name' => 'Singing'],
+            ['name' => 'Advertising'],
+            ['name' => 'Branding']
         ];
 
         foreach ($industries as $industry) {
