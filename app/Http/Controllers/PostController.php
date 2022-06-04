@@ -49,7 +49,7 @@ class PostController extends Controller
 
         if ($validation->fails()) {
             return $this->errorRes(
-                null,
+                $validation->errors()->first(),
                 'Failed validation',
                 Response::HTTP_UNPROCESSABLE_ENTITY
             );
