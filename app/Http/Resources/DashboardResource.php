@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Experience;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class DashboardResource extends JsonResource
@@ -14,7 +15,12 @@ class DashboardResource extends JsonResource
      */
     public function toArray($request)
     {
+        $role = Experience::where('user_id', $this->id)
+            ->orderBy('id', 'desc')
+            ->pluck('title')->first();
+
         return [
+            'role'          => $role,
             'fullname'      => $this->profile->first_name . ' ' . $this->profile->last_name,
             'address'       => $this->profile->address,
             'overview'      => $this->profile->about,

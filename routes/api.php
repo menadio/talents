@@ -16,10 +16,13 @@ use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\UserSkillController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\AccountTypeController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\EmploymentTypeController;
 use App\Http\Controllers\EventCategoryController;
 use App\Http\Controllers\JobApplicationController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\TalentController;
 
 Route::get('account-types', [AccountTypeController::class, 'index']); // get collectionn of account types
 
@@ -100,4 +103,12 @@ Route::middleware('auth:sanctum')->group(function ($router) {
     Route::put('events/{event}', [EventController::class, 'update'])->name('events.update'); // update an event
 
     Route::delete('events/{event}', [EventController::class, 'destroy'])->name('events.delete'); // delete an event
+
+    Route::get('posts', [PostController::class, 'index'])->name('posts.index'); // get post collection
+
+    Route::post('posts', [PostController::class, 'store'])->name('posts.store'); // create new post
+
+    Route::post('posts/{post}/comment', [CommentController::class, 'store'])->name('comments.store'); // create post comment
+
+    Route::get('talents', TalentController::class); // get collection of talents
 });
