@@ -93,4 +93,14 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->hasMany(Event::class);
     }
+
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
