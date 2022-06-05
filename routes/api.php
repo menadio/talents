@@ -20,6 +20,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\EmploymentTypeController;
 use App\Http\Controllers\EventCategoryController;
+use App\Http\Controllers\EventTypeController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TalentController;
@@ -35,6 +36,8 @@ Route::get('skills', [SkillController::class, 'index'])->name('skills.index'); /
 Route::get('categories', [CategoryController::class, 'index'])->name('categories.index'); // get collection of categories
 
 Route::get('event-categories', EventCategoryController::class)->name('eventCategories'); // get collection of event categories
+
+Route::get('event-types', EventTypeController::class)->name('event-types'); // get collection of event types
 
 Route::get('positions/list', [PositionController::class, 'list'])->name('positions.fetch'); // list job positions collection
 
