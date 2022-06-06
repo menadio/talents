@@ -42,22 +42,22 @@ class UserController extends Controller
     {
         // validate request data
         $validation = Validator::make($request->all(), [
-            'username'      => ['string', 'unique:profiles,username'],
-            'first_name'    => ['string'],
-            'last_name'     => ['string'],
-            'about'         => ['string'],
-            'phone'         => ['string'],
-            'country'       => ['string'],
-            'state'         => ['string'],
-            'city'          => ['string'],
-            'address'       => ['string'],
-            'postal_code'   => ['string'],
-            'facebook'      => ['string'],
-            'instagram'     => ['string'],
-            'twitter'       => ['string'],
-            'tiktok'        => ['string'],
-            'photo'         => ['image', 'mimes:jpg,bmp,png', 'max:256'],
-            'cover_photo'   => ['image', 'mimes:jpg,bmp,png', 'max:256']
+            'username'      => ['string', 'nullable', 'unique:profiles,username'],
+            'first_name'    => ['string', 'nullable'],
+            'last_name'     => ['string', 'nullable'],
+            'about'         => ['string', 'nullable'],
+            'phone'         => ['string', 'nullable'],
+            'country'       => ['string', 'nullable'],
+            'state'         => ['string', 'nullable'],
+            'city'          => ['string', 'nullable'],
+            'address'       => ['string', 'nullable'],
+            'postal_code'   => ['string', 'nullable'],
+            'facebook'      => ['string', 'nullable'],
+            'instagram'     => ['string', 'nullable'],
+            'twitter'       => ['string', 'nullable'],
+            'tiktok'        => ['string', 'nullable'],
+            'photo'         => ['image', 'mimes:jpg,bmp,png', 'max:256', 'nullable'],
+            'cover_photo'   => ['image', 'mimes:jpg,bmp,png', 'max:256', 'nullable']
         ]);
 
         if ($validation->fails()) {
